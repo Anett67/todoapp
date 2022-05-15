@@ -9,12 +9,12 @@
     
         <a class="m-2 btn btn-primary text-white" href="{{ path('edit_tasklists', {id: list.id}) }}">Modifier la liste</a>
 
-        <form class="m-2" action="" method="POST">
+        <form class="m-2" action="{{ path('archive_tasklist', {'id': list.id}) }}" method="POST">
+            <input type="hidden" name="_token" value="{{ csrf_token('ARC' ~ list.id) }}">
             <button class="btn btn-warning" type="submit">Archiver la liste</button>
         </form>
 
         <form class="m-2" id="delete-tasklist-form" action="{{ path('delete_tasklist', {'id': list.id}) }}" method="POST">
-            <input type="hidden" name="_method" value="delete">
             <input type="hidden" name="_token" value="{{ csrf_token('SUP' ~ list.id) }}">
             <button class="btn btn-secondary" type="submit">Supprimer la liste</button>
         </form>

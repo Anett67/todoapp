@@ -102,7 +102,7 @@ class Tasklist
         return $this->archivedAt;
     }
 
-    public function setArchivedAt(\DateTimeImmutable $archivedAt): self
+    public function setArchivedAt(\DateTimeImmutable $archivedAt = null): self
     {
         $this->archivedAt = $archivedAt;
 

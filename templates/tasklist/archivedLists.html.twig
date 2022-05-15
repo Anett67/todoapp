@@ -19,7 +19,10 @@
                 <tr>
                     <th>{{ list.title }}</th>
                     <td>
-                        Réactiver la liste
+                        <form class="m-2" action="{{ path('activate_tasklist', {'id': list.id}) }}" method="POST">
+                            <input type="hidden" name="_token" value="{{ csrf_token('ACT' ~ list.id) }}">
+                            <button class="btn btn-warning" type="submit">Réactiver la liste</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}

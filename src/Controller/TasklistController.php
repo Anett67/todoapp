@@ -105,6 +105,22 @@ class TasklistController extends AbstractController
         
         return $this->redirectToRoute('tasklists');
     }
+    
+    /**
+     * @Route("/tasklist/{id}/activate", name="activate_tasklist", requirements={"id":"\d+"})
+     */
+    public function activateList(Tasklist $tasklist, EntityManagerInterface $manager, Request $request): Response
+    {
+        if($this->isCsrfTokenValid('ACT' . $tasklist->getId(), $request->get('_token'))){
+            $tasklist->setArchivedAt();
+            $tasklist->setUpdatedAt();
+            $manager->persist($tasklist);
+            $manager->flush();
+            $this->addFlash("success",  "La liste a bien été activée");
+        }
+        
+        return $this->redirectToRoute('tasklists');
+    }
 
     /**
      * @Route("/tasklist/{id}/delete", name="delete_tasklist", requirements={"id":"\d+"})
