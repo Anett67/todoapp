@@ -39,20 +39,36 @@ class TasklistRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Tasklist[] Returns an array of Tasklist objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Tasklist[] Returns an array of Tasklist objects
+     */
+    public function findUsersActiveLists($value): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.user = :val')
+            ->setParameter('val', $value)
+            ->andWhere('t.archivedAt = :val')
+            ->setParameter('val', null)
+            ->orderBy('t.updatedAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Tasklist[] Returns an array of Tasklist objects
+     */
+    public function findUsersArchivedLists($value): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.user = :val')
+            ->setParameter('val', $value)
+            ->andWhere('t.archivedAt IS NOT NULL')
+            ->orderBy('t.updatedAt', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Tasklist
 //    {

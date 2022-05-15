@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes archivées{% endblock %}
+
+{% block body %}
+
+    <h1>Listes archivées</h1>
+
+    {% if tasklists %}
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for list in tasklists %}
+                <tr>
+                    <th>{{ list.title }}</th>
+                    <td>
+                        Réactiver la liste
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+
+    <p class="mt-3">Vous n'avez pas de liste archivée.</p>
+
+    {% endif %}
+
+{% endblock %}

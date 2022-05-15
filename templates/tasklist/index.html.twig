@@ -1,20 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TasklistController!{% endblock %}
+{% block title %}Listes de tâches{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Mes listes de tâches</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <button class="btn btn-primary">
+        <a class="text-white" href="">Ajouter une liste</a>
+    </button>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/david/OneDrive/Dokumentumok/Symfony/todoapp/src/Controller/TasklistController.php'|file_link(0) }}">src/Controller/TasklistController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/david/OneDrive/Dokumentumok/Symfony/todoapp/templates/tasklist/index.html.twig'|file_link(0) }}">templates/tasklist/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% if tasklists %}
+
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Progression</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for list in tasklists %}
+            <tr>
+                <th scope="col"><a href="">{{ list.title }}</a></th>
+                <td><span class="list-completion">complété/total</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <p class="mt-3">Vous n'avez pas de liste de tâches.</p>
+
+    {% endif %} 
+
 {% endblock %}
