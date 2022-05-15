@@ -75,13 +75,17 @@ class TasklistController extends AbstractController
 
             $this->addFlash('success', $edition ? 'La liste a été renommée avec succès' : 'La liste a été ajoutée avec succès');
 
+            if($edition) {
+                return $this->redirectToRoute('tasklist', ['id' => $tasklist->getId()]);
+            }
+
             return $this->redirectToRoute('tasklists');
         }
 
         return $this->render('tasklist/createEditTasklist.html.twig', [
             'form' => $form->createView(),
             'meta_title' => $edition ? 'Renommer la liste' : 'Ajouter une liste de tâche',
-            'title' => $edition ? 'Renommer la liste <strong>' . $tasklist->title . '</strong>' : 'Ajouter une liste de tâche'
+            'title' => $edition ? "Renommer la liste '" . $tasklist->getTitle() . "'" : 'Ajouter une liste de tâche'
         ]);
     }
 }

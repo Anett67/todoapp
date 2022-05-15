@@ -7,7 +7,7 @@
     
     <div class="d-flex flex-wrap align-items-end">
     
-        <a class="m-2 btn btn-primary text-white" href="">Modifier la liste</a>
+        <a class="m-2 btn btn-primary text-white" href="{{ path('edit_tasklists', {id: list.id}) }}">Modifier la liste</a>
 
         <form class="m-2" action="" method="POST">
             <button class="btn btn-warning" type="submit">Archiver la liste</button>
