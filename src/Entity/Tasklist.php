@@ -155,13 +155,13 @@ class Tasklist
 
         return $this->getTasks()->filter(function(Task $task) {
             return $task->getCompletedAt();
-        });;
+        });
     }
 
     public function getTasksInProgress() {
 
         return $this->getTasks()->filter(function(Task $task) {
             return $task->getCompletedAt() === null;
-        });;
+        });
     }
 }

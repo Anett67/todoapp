@@ -218,4 +218,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getActiveTasklists() {
+        return $this->getTasklists()->filter(function(Tasklist $tasklist) {
+            return $tasklist->getArchivedAt() === null;
+        });
+    }
+
+    public function getArchivedTasklists() {
+        return $this->getTasklists()->filter(function(Tasklist $tasklist) {
+            return $tasklist->getArchivedAt();
+        });
+    }
 }
