@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ list.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ list.title }}</h1>
+    
+    <div class="d-flex flex-wrap align-items-end">
+    
+        <a class="m-2 btn btn-primary text-white" href="">Modifier la liste</a>
+
+        <form class="m-2" action="" method="POST">
+            <button class="btn btn-warning" type="submit">Archiver la liste</button>
+        </form>
+
+        <form class="m-2" action="" method="POST">
+            <button class="btn btn-secondary" type="submit">Supprimer la liste</button>
+        </form>
+
+        <a href="" class="m-2 btn btn-success">Ajouter une tâche</a>
+    </div>
+
+    <table class="table mt-2">
+        {% if list.getTasksInProgress|length %}
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Tâches en cours
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in list.getTasksInProgress %}
+                <tr>
+                    <td>
+                        <span>{{ task.title }}</span>
+                        {% if task.isImportant %}
+                            <span class="mx-2 badge bg-success">Important</span>
+                        {% endif %}
+                    </td>
+                    <td class="d-flex align-items-end">
+                        <form class="mx-2" action="" method="POST">
+                            <button class="btn btn-success" type="submit" title="Compléter">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                        </form>
+                        <a class="mx-2 btn btn-primary text-white" href="" title="Modifier">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                        <form class="mx-2" action="" method="POST">
+                            <button class="btn btn-secondary" type="submit" title="Supprimer">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %} 
+        {% if list.getCompletedTasks|length %}
+        <thead>
+            <tr>
+                <th colspan="2">
+                    Tâches complétées            
+                </th>
+            </tr>
+        </thead>
+        {% endif %}
+        <tbody>
+            {% for task in list.getCompletedTasks %}
+            <tr>
+                <td>
+                    <span>{{ task.title }}</span>
+                    {% if task.isImportant %}
+                        <span class="mx-2 badge bg-success">Important</span>
+                    {% endif %}
+                </td>
+                <td class="d-flex align-items-end actions">
+                    <form action="" method="POST">
+                        <button class="mx-2 btn btn-success" type="submit" title="Réactiver">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </form>
+                    <button class="mx-2 btn btn-primary" title="Modifier">
+                        <a class="text-white" href=""><i class="fa-solid fa-pencil"></i></i></a>
+                    </button>
+                    <form class="mx-2" action="" method="POST">
+                        <button class="btn btn-secondary" type="submit" title="Supprimer">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -21,7 +21,7 @@
         <tbody>
             {% for list in tasklists %}
             <tr>
-                <th scope="col"><a href="">{{ list.title }}</a></th>
+                <th scope="col"><a href="{{ path('tasklist', {id: list.id}) }}">{{ list.title }}</a></th>
                 <td><span class="list-completion">{{ list.getCompletedTasks|length }}/{{ list.tasks|length }}</span></td>
             </tr>
             {% endfor %}

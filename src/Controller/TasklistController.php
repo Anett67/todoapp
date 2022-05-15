@@ -28,6 +28,18 @@ class TasklistController extends AbstractController
     }
 
     /**
+     * @Route("/tasklist/{id}", name="tasklist", requirements={"id":"\d+"})
+     */
+    public function tasklist(Tasklist $tasklist): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        return $this->render('tasklist/tasklist.html.twig', [
+            'list' => $tasklist,
+        ]);
+    }
+
+    /**
      * @Route("/archives", name="archived_tasklists")
      */
     public function getArchivedLists(TasklistRepository $tasklistRepository): Response
