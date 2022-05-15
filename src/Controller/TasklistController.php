@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tasklist;
 use App\Form\TasklistType;
 use App\Repository\TasklistRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,5 +88,35 @@ class TasklistController extends AbstractController
             'meta_title' => $edition ? 'Renommer la liste' : 'Ajouter une liste de tâche',
             'title' => $edition ? "Renommer la liste '" . $tasklist->getTitle() . "'" : 'Ajouter une liste de tâche'
         ]);
+    }
+
+    /**
+     * @Route("/tasklist/{id}/archive", name="archive_tasklist", requirements={"id":"\d+"})
+     */
+    public function archiveList(Tasklist $tasklist, EntityManagerInterface $manager, Request $request): Response
+    {
+        if($this->isCsrfTokenValid('ARC' . $tasklist->getId(), $request->get('_token'))){
+            $tasklist->setArchivedAt(new DateTimeImmutable());
+            $tasklist->setUpdatedAt();
+            $manager->persist($tasklist);
+            $manager->flush();
+            $this->addFlash("success",  "La liste a bien été archivée");
+        }
+        
+        return $this->redirectToRoute('tasklists');
+    }
+
+    /**
+     * @Route("/tasklist/{id}/delete", name="delete_tasklist", requirements={"id":"\d+"})
+     */
+    public function deleteList(Tasklist $tasklist, EntityManagerInterface $manager, Request $request): Response
+    {
+        if($this->isCsrfTokenValid('SUP' . $tasklist->getId(), $request->get('_token'))){
+            $manager->remove($tasklist);
+            $manager->flush();
+            $this->addFlash("success",  "La liste a bien été supprimé");
+        }
+        
+        return $this->redirectToRoute('tasklists');
     }
 }
