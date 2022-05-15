@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Tasklist;
+use App\Form\TasklistType;
 use App\Repository\TasklistRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,6 +38,38 @@ class TasklistController extends AbstractController
 
         return $this->render('tasklist/archivedLists.html.twig', [
             'tasklists' => $tasklists,
+        ]);
+    }
+
+    /**
+     * @Route("/tasklist/creation", name="create_tasklists")
+     * @Route("/tasklist/{id}/edition", name="edit_tasklists", requirements={"id":"\d+"})
+     */
+    public function tasklistCreateOrEdit(Tasklist $tasklist = null, Request $request, EntityManagerInterface $manager): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
+        $tasklist = $tasklist ?? new Tasklist();
+        $edition = $tasklist->getId();
+
+        $form = $this->createForm(TasklistType::class, $tasklist);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $tasklist->setUser($this->getUser());
+            if(!$edition) $tasklist->setCreatedAt();
+            $tasklist->setUpdatedAt();
+            $manager->persist($tasklist);
+            $manager->flush();
+
+            $this->addFlash('success', $edition ? 'La liste a été renommée avec succès' : 'La liste a été ajoutée avec succès');
+
+            return $this->redirectToRoute('tasklists');
+        }
+
+        return $this->render('tasklist/createEditTasklist.html.twig', [
+            'form' => $form->createView(),
+            'meta_title' => $edition ? 'Renommer la liste' : 'Ajouter une liste de tâche',
+            'title' => $edition ? 'Renommer la liste <strong>' . $tasklist->title . '</strong>' : 'Ajouter une liste de tâche'
         ]);
     }
 }

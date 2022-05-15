@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TasklistRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,12 +26,12 @@ class Tasklist
     private $title;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $updatedAt;
 
@@ -77,9 +78,9 @@ class Tasklist
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt = null): self
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = $createdAt ?? new DateTimeImmutable();
 
         return $this;
     }
@@ -89,9 +90,9 @@ class Tasklist
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt = null): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = $updatedAt ?? new DateTimeImmutable();
 
         return $this;
     }
