@@ -27,7 +27,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/task/{id}/creation", name="create_task")
      */
-    public function tasklistCreateOrEdit(Tasklist $tasklist = null, Request $request, EntityManagerInterface $manager): Response
+    public function taskCreate(Tasklist $tasklist, Request $request, EntityManagerInterface $manager): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
         $task = new Task();
@@ -51,6 +51,33 @@ class TaskController extends AbstractController
             'form' => $form->createView(),
             'meta_title' => 'Ajouter une liste de tâche',
             'title' => 'Ajouter une liste de tâche'
+        ]);
+    }
+
+    /**
+     * @Route("/task/{id}/edition", name="edit_task")
+     */
+    public function taskEdit(Task $task, Request $request, EntityManagerInterface $manager): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); 
+
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $task->setUpdatedAt();
+            $manager->persist($task);
+            $manager->flush();
+
+            $this->addFlash('success', 'La tâche a été modifiée avec succès');
+
+            return $this->redirectToRoute('tasklist', ['id' => $task->getTasklist()->getId()]);
+        }
+
+        return $this->render('tasklist/createEditTasklist.html.twig', [
+            'form' => $form->createView(),
+            'meta_title' => 'Modifier la tâche',
+            'title' => "Modifier la tâche '" . $task->getTitle() . "'"
         ]);
     }
 
