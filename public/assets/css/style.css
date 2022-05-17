@@ -17,3 +17,7 @@ label {
 td {
     vertical-align: middle;
 }
+
+.form-check-label {
+    margin-top: 0;
+}
