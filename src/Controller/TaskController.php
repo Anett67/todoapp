@@ -81,4 +81,19 @@ class TaskController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/task/{id}/complete", name="complete_task", requirements={"id":"\d+"})
+     */
+    public function completeTask(Task $task, EntityManagerInterface $manager, Request $request): Response
+    {
+        if($this->isCsrfTokenValid('COMP' . $task->getId(), $request->get('_token'))){
+            $task->setCompleted(true);
+            $task->setUpdatedAt();
+            $manager->persist($task);
+            $manager->flush();
+        }
+        
+        return $this->redirectToRoute('tasklist', ['id' => $task->getTasklist()->getId()]);
+    }
+
 }

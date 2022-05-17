@@ -41,10 +41,9 @@
                         {% endif %}
                     </td>
                     <td class="d-flex align-items-end">
-                        <form class="mx-2" action="" method="POST">
-                            <button class="btn btn-success" type="submit" title="Compléter">
-                                <i class="fa-solid fa-check"></i>
-                            </button>
+                        <form class="m-2" id="complete-task-form" action="{{ path('complete_task', {'id': task.id}) }}" method="POST">
+                            <input type="hidden" name="_token" value="{{ csrf_token('COMP' ~ task.id) }}">
+                            <button class="btn btn-success" type="submit"><i class="fa-solid fa-check"></i></button>
                         </form>
                         <a class="mx-2 btn btn-primary text-white" href="{{ path('edit_task', {id: task.id}) }}" title="Modifier">
                             <i class="fa-solid fa-pencil"></i>
