@@ -19,7 +19,7 @@
             <button class="btn btn-secondary" type="submit">Supprimer la liste</button>
         </form>
 
-        <a href="" class="m-2 btn btn-success">Ajouter une tâche</a>
+        <a href="{{ path('create_task', {id: list.id}) }}" class="m-2 btn btn-success">Ajouter une tâche</a>
     </div>
 
     <table class="table mt-2">

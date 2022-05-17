@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,7 +26,7 @@ class Task
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $Description;
+    private $description;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -38,14 +39,14 @@ class Task
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $completedAt;
+    private $completed;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isImportant;
+    private $important;
 
     /**
      * @ORM\ManyToOne(targetEntity=Tasklist::class, inversedBy="tasks")
@@ -72,12 +73,12 @@ class Task
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(?string $Description): self
+    public function setDescription(?string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
@@ -87,9 +88,9 @@ class Task
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt = null): self
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = $createdAt ?? new DateTimeImmutable();
 
         return $this;
     }
@@ -99,33 +100,33 @@ class Task
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt = null): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = $updatedAt ?? new DateTimeImmutable();
 
         return $this;
     }
 
-    public function getCompletedAt(): ?\DateTimeImmutable
+    public function isCompleted(): ?bool
     {
-        return $this->completedAt;
+        return $this->completed;
     }
 
-    public function setCompletedAt(?\DateTimeImmutable $completedAt): self
+    public function setCompleted(bool $completed): self
     {
-        $this->completedAt = $completedAt;
+        $this->completed = $completed;
 
         return $this;
     }
 
-    public function isIsImportant(): ?bool
+    public function isImportant(): ?bool
     {
-        return $this->isImportant;
+        return $this->important;
     }
 
-    public function setIsImportant(bool $isImportant): self
+    public function setImportant(bool $important): self
     {
-        $this->isImportant = $isImportant;
+        $this->important = $important;
 
         return $this;
     }
