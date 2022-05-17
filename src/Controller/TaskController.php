@@ -110,4 +110,18 @@ class TaskController extends AbstractController
         
         return $this->redirectToRoute('tasklist', ['id' => $task->getTasklist()->getId()]);
     }
+
+    /**
+     * @Route("/task/{id}/delete", name="delete_task", requirements={"id":"\d+"})
+     */
+    public function deleteTask(Task $task, EntityManagerInterface $manager, Request $request): Response
+    {
+        if($this->isCsrfTokenValid('SUP' . $task->getId(), $request->get('_token'))){
+            $manager->remove($task);
+            $manager->flush();
+            $this->addFlash("success",  "La tâche a bien été supprimé");
+        }
+        
+        return $this->redirectToRoute('tasklist', ['id' => $task->getTasklist()->getId()]);
+    }
 }

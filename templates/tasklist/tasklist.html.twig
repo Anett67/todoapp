@@ -48,10 +48,9 @@
                         <a class="mx-2 btn btn-primary text-white" href="{{ path('edit_task', {id: task.id}) }}" title="Modifier">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
-                        <form class="mx-2" action="" method="POST">
-                            <button class="btn btn-secondary" type="submit" title="Supprimer">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                        <form class="m-2" id="delete-task-form" action="{{ path('delete_task', {'id': task.id}) }}" method="POST">
+                            <input type="hidden" name="_token" value="{{ csrf_token('SUP' ~ task.id) }}">
+                            <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-trash-can"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -84,10 +83,9 @@
                     <button class="mx-2 btn btn-primary" title="Modifier">
                         <a class="text-white" href=""><i class="fa-solid fa-pencil"></i></i></a>
                     </button>
-                    <form class="mx-2" action="" method="POST">
-                        <button class="btn btn-secondary" type="submit" title="Supprimer">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
+                    <form class="m-2" id="delete-completed-task-form" action="{{ path('delete_task', {'id': task.id}) }}" method="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token('SUP' ~ task.id) }}">
+                        <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-trash-can"></i></button>
                     </form>
                 </td>
             </tr>
@@ -99,4 +97,5 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="../../assets/js/deleteTasklist.js"></script>
+    <script src="../../assets/js/deleteTask.js"></script>
 {% endblock %}
