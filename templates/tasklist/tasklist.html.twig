@@ -77,10 +77,9 @@
                     {% endif %}
                 </td>
                 <td class="d-flex align-items-end actions">
-                    <form action="" method="POST">
-                        <button class="mx-2 btn btn-success" type="submit" title="Réactiver">
-                            <i class="fa-solid fa-rotate-right"></i>
-                        </button>
+                    <form class="m-2" id="activate-task-form" action="{{ path('activate_task', {'id': task.id}) }}" method="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token('REACT' ~ task.id) }}">
+                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-rotate-right"></i></button>
                     </form>
                     <button class="mx-2 btn btn-primary" title="Modifier">
                         <a class="text-white" href=""><i class="fa-solid fa-pencil"></i></i></a>

@@ -96,4 +96,18 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('tasklist', ['id' => $task->getTasklist()->getId()]);
     }
 
+    /**
+     * @Route("/task/{id}/activate", name="activate_task", requirements={"id":"\d+"})
+     */
+    public function activateTask(Task $task, EntityManagerInterface $manager, Request $request): Response
+    {
+        if($this->isCsrfTokenValid('REACT' . $task->getId(), $request->get('_token'))){
+            $task->setCompleted(false);
+            $task->setUpdatedAt();
+            $manager->persist($task);
+            $manager->flush();
+        }
+        
+        return $this->redirectToRoute('tasklist', ['id' => $task->getTasklist()->getId()]);
+    }
 }
