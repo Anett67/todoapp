@@ -47,10 +47,10 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('tasklist', ['id' => $tasklist->getId()]);
         }
 
-        return $this->render('tasklist/createEditTasklist.html.twig', [
+        return $this->render('task/createEditTask.html.twig', [
             'form' => $form->createView(),
-            'meta_title' => 'Ajouter une liste de tâche',
-            'title' => 'Ajouter une liste de tâche'
+            'meta_title' => 'Ajouter une tâche',
+            'title' => 'Ajouter une tâche'
         ]);
     }
 
@@ -74,7 +74,7 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('tasklist', ['id' => $task->getTasklist()->getId()]);
         }
 
-        return $this->render('tasklist/createEditTasklist.html.twig', [
+        return $this->render('task/createEditTask.html.twig', [
             'form' => $form->createView(),
             'meta_title' => 'Modifier la tâche',
             'title' => "Modifier la tâche '" . $task->getTitle() . "'"
