@@ -4,11 +4,14 @@
 
 {% block body %}
     <h1>Créer un compte</h1>
-
+    
+    <div>{{ form_errors(registrationForm) }}</div>
+    
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.first_name, {
             label: 'Prénom'
         }) }}
+        
         {{ form_row(registrationForm.last_name, {
             label: 'Nom'
         }) }}
