@@ -6,6 +6,18 @@
     <h1>{{ title }}</h1>
 
     {{ form_start(form) }}
+        {{ form_row(form.title, {
+            label: 'Titre'
+        }) }}
+
+        {{ form_row(form.description) }}
+
+        {{ form_row(form.completed, {
+            label: 'Complétée'
+        }) }}
+
+        {{ form_row(form.important) }}
+
         {{ form_widget(form) }}
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     {{ form_end(form) }}

@@ -16,7 +16,8 @@ class UserThemeType extends AbstractType
         $builder
             ->add('Theme', EntityType::class, [
                 'class' => Theme::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'label' => 'Thème'
             ])
         ;
     }

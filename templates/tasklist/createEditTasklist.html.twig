@@ -6,7 +6,9 @@
     <h1>{{ title }}</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+        {{ form_row(form.title, {
+            label: 'Titre'
+        }) }}
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     {{ form_end(form) }}
 
